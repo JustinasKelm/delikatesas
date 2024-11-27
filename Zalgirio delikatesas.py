@@ -158,16 +158,14 @@ for i in range(qrt):
                 else:
                     trnvc2+=1
         print(tc1,tc2)
+        list3.append(tc1)
+        list4.append(tc2)
         tc1=0
         tc2=0
         tvc1=0
         tvc2=0
         fc1=0
         fc2=0
-        list3.append(tc1)
-        list4.append(tc2)
-        tc1=0
-        tc2=0
         time.sleep(0.3)
     qrc+=1
     print(f"{sum(list1)} {sum(list2)} Q{qrc}")
@@ -176,8 +174,11 @@ print("")
 print(f"End of Regulation score: {teamchoice1} {sum(list1)} - {sum(list2)} {teamchoice2}  Second chance points: {scpc1} - {scpc2}")
 print(f"Foul points {ftpc1} - {ftpc2}  Turnovers: {trnvc1} - {trnvc2}")
 print("")
-for i in range(4):
-    print(f"{list3[i]} - {list4[i]} Q{i+1}")
+print(f"{sum(list3[0:19])} - {sum(list4[0:19])} Q1")
+print(f"{sum(list3[20:39])} - {sum(list4[20:39])} Q2")
+print(f"{sum(list3[40:59])} - {sum(list4[40:59])} Q3")
+print(f"{sum(list3[60:79])} - {sum(list4[60:79])} Q4")
+print("")
 while sum(list1) == sum(list2):
     for i in range(poss//2):
         if random.randint(1,10)<4:
@@ -246,7 +247,7 @@ while sum(list1) == sum(list2):
                         if fc1>4:
                             for i in range(2):
                                 if random.randint(1,1000)<t1.ftp:
-                                    tc1+=
+                                    tc1+=1
                                     list1.append(1)
                                     ftpc1+=1
             else:
