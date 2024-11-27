@@ -2,6 +2,8 @@ import time
 import random
 list1=[]
 list2=[]
+list3=[]
+list4=[]
 tvc1=0
 tvc2=0
 tc1=0
@@ -54,14 +56,17 @@ for i in range(qrt):
                         fc1+=1
                         if random.randint(1,1000)<t1.ftp:
                             tc1+=1
+                            list1.append(1)
                             ftpc1+=1
                 else:
                     if random.randint(1,1000)<t2.flp:
                         fc1+=1
-                        for i in range(3):
-                            if random.randint(1,1000)<t1.ftp:
-                                tc1+=1
-                                ftpc1+=1
+                        if fc1>4:
+                            for i in range(3):
+                                if random.randint(1,1000)<t1.ftp:
+                                    tc1+=1
+                                    list1.append(1)
+                                    ftpc1+=1
             else:
                 trnvc1+=1
                 tvc1+=1
@@ -75,14 +80,17 @@ for i in range(qrt):
                         fc2+=1
                         if random.randint(1,1000)<t2.ftp:
                             tc2+=1
+                            list2.append(1)
                             ftpc2+=1
                 else:
                     if random.randint(1,1000)<t1.flp:
                         fc2+=1
-                        for i in range(3):
-                            if random.randint(1,1000)<t2.ftp:
-                                tc2+=1
-                                ftpc2+=1
+                        if fc2>4:
+                            for i in range(3):
+                                if random.randint(1,1000)<t2.ftp:
+                                    tc2+=1
+                                    list2.append(1)
+                                    ftpc2+=1
             else:
                 trnvc2+=1
                 tvc2+=1
@@ -96,14 +104,17 @@ for i in range(qrt):
                         fc1+=1
                         if random.randint(1,1000)<t1.ftp:
                             tc1+=1
+                            list1.append(1)
                             ftpc1+=1
                 else:
                     if random.randint(1,1000)<t2.flp:
                         fc1+=1
-                        for i in range(2):
-                            if random.randint(1,1000)<t1.ftp:
-                                tc1+=1
-                                ftpc1+=1
+                        if fc1>4:
+                            for i in range(2):
+                                if random.randint(1,1000)<t1.ftp:
+                                    tc1+=1
+                                    list1.append(1)
+                                    ftpc1+=1
             else:
                 trnvc1+=1
         if tc2==0 and tvc2==0:
@@ -116,14 +127,17 @@ for i in range(qrt):
                         fc2+=1
                         if random.randint(1,1000)<t2.ftp:
                             tc2+=1
+                            list2.append(1)
                             ftpc2+=1
                 else:
                     if random.randint(1,1000)<t1.flp:
                         fc2+=1
-                        for i in range(2):
-                            if random.randint(1,1000)<t2.ftp:
-                                tc2+=1
-                                ftpc2+=1
+                        if fc2>4:
+                            for i in range(2):
+                                if random.randint(1,1000)<t2.ftp:
+                                    tc2+=1
+                                    list2.append(1)
+                                    ftpc2+=1
             else:
                 trnvc2+=1
         if tc1 == 0 and tvc1==0 or tc2 == 0 and tvc2==0:
@@ -148,14 +162,22 @@ for i in range(qrt):
         tc2=0
         tvc1=0
         tvc2=0
+        fc1=0
+        fc2=0
+        list3.append(tc1)
+        list4.append(tc2)
+        tc1=0
+        tc2=0
         time.sleep(0.3)
     qrc+=1
     print(f"{sum(list1)} {sum(list2)} Q{qrc}")
     time.sleep(3)
 print("")
-print(f"End of Regulation score: {teamchoice1} {sum(list1)} - {sum(list2)} {teamchoice2}  Second chance points: {scpc1} - {scpc2}  Turnovers: {trnvc1} - {trnvc2}")
-print(f"Foul points {ftpc1} - {ftpc2}")
+print(f"End of Regulation score: {teamchoice1} {sum(list1)} - {sum(list2)} {teamchoice2}  Second chance points: {scpc1} - {scpc2}")
+print(f"Foul points {ftpc1} - {ftpc2}  Turnovers: {trnvc1} - {trnvc2}")
 print("")
+for i in range(4):
+    print(f"{list3[i]} - {list4[i]} Q{i+1}")
 while sum(list1) == sum(list2):
     for i in range(poss//2):
         if random.randint(1,10)<4:
@@ -168,14 +190,17 @@ while sum(list1) == sum(list2):
                         fc1+=1
                         if random.randint(1,1000)<t1.ftp:
                             tc1+=1
+                            list1.append(1)
                             ftpc1+=1
                 else:
                     if random.randint(1,1000)<t2.flp:
                         fc1+=1
-                        for i in range(3):
-                            if random.randint(1,1000)<t1.ftp:
-                                tc1+=1
-                                ftpc1+=1
+                        if fc1>4:
+                            for i in range(3):
+                                if random.randint(1,1000)<t1.ftp:
+                                    tc1+=1
+                                    list1.append(1)
+                                    ftpc1+=1
             else:
                 trnvc1+=1
                 tvc1+=1
@@ -189,14 +214,17 @@ while sum(list1) == sum(list2):
                         fc2+=1
                         if random.randint(1,1000)<t2.ftp:
                             tc2+=1
+                            list2.append(1)
                             ftpc2+=1
                 else:
                     if random.randint(1,1000)<t1.flp:
                         fc2+=1
-                        for i in range(3):
-                            if random.randint(1,1000)<t2.ftp:
-                                tc2+=1
-                                ftpc2+=1
+                        if fc2>4:
+                            for i in range(3):
+                                if random.randint(1,1000)<t2.ftp:
+                                    tc2+=1
+                                    list2.append(1)
+                                    ftpc2+=1
             else:
                 trnvc2+=1
                 tvc2+=1
@@ -210,14 +238,17 @@ while sum(list1) == sum(list2):
                         fc1+=1
                         if random.randint(1,1000)<t1.ftp:
                             tc1+=1
+                            list1.append(1)
                             ftpc1+=1
                 else:
                     if random.randint(1,1000)<t2.flp:
                         fc1+=1
-                        for i in range(2):
-                            if random.randint(1,1000)<t1.ftp:
-                                tc1+=1
-                                ftpc1+=1
+                        if fc1>4:
+                            for i in range(2):
+                                if random.randint(1,1000)<t1.ftp:
+                                    tc1+=
+                                    list1.append(1)
+                                    ftpc1+=1
             else:
                 trnvc1+=1
         if tc2==0 and tvc2==0:
@@ -230,14 +261,17 @@ while sum(list1) == sum(list2):
                         fc2+=1
                         if random.randint(1,1000)<t2.ftp:
                             tc2+=1
+                            list2.append(1)
                             ftpc2+=1
                 else:
                     if random.randint(1,1000)<t1.flp:
                         fc2+=1
-                        for i in range(2):
-                            if random.randint(1,1000)<t2.ftp:
-                                tc2+=1
-                                ftpc2+=1
+                        if fc2>4:
+                            for i in range(2):
+                                if random.randint(1,1000)<t2.ftp:
+                                    tc2+=1
+                                    list2.append(1)
+                                    ftpc2+=1
             else:
                 trnvc2+=1
                 tvc2+=1
@@ -263,6 +297,8 @@ while sum(list1) == sum(list2):
         tc2=0
         tvc1=0
         tvc2=0
+        fc1=0
+        fc2==0
         time.sleep(0.3)
     qrc+=1
     otc+=1
