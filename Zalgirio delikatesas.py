@@ -15,7 +15,7 @@ trnvc1=0
 trnvc2=0
 qrc=0
 qrt=4
-poss=20
+poss=16
 ftpc1=0
 ftpc2=0
 fc1=0
@@ -174,10 +174,10 @@ print("")
 print(f"End of Regulation score: {teamchoice1} {sum(list1)} - {sum(list2)} {teamchoice2}  Second chance points: {scpc1} - {scpc2}")
 print(f"Foul points {ftpc1} - {ftpc2}  Turnovers: {trnvc1} - {trnvc2}")
 print("")
-print(f"{sum(list3[0:20])} - {sum(list4[0:20])} Q1")
-print(f"{sum(list3[20:40])} - {sum(list4[20:40])} Q2")
-print(f"{sum(list3[40:60])} - {sum(list4[40:60])} Q3")
-print(f"{sum(list3[60:80])} - {sum(list4[60:80])} Q4")
+print(f"{sum(list3[0:poss])} - {sum(list4[0:poss])} Q1")
+print(f"{sum(list3[poss:poss*2])} - {sum(list4[poss:poss*2])} Q2")
+print(f"{sum(list3[poss*2:poss*3])} - {sum(list4[poss*2:poss*3])} Q3")
+print(f"{sum(list3[poss*3:poss*4])} - {sum(list4[poss*3:poss*4])} Q4")
 print("")
 while sum(list1) == sum(list2):
     for i in range(poss//2):
