@@ -1,11 +1,78 @@
 import time
 import random
+import requests
+import pandas as pd
+from bs4 import BeautifulSoup,Comment
+
+url = 'https://www.basketball-reference.com/international/euroleague/2026.html#team_stats_per_game'
+response = requests.get(url)
+response.encoding = 'utf-8'
+soup = BeautifulSoup(response.text, 'html.parser')
+comments = soup.find_all(string=lambda text: isinstance(text, Comment))
+table = None
+for comment in comments:
+    if 'id="team_stats_per_game"' in comment:
+        comment_soup = BeautifulSoup(comment, "html.parser")
+        table = comment_soup.find("table", {"id": "team_stats_per_game"})
+        break
+headers = [th.get_text(strip=True) for th in table.find_all("th")]
+rows = table.find("tbody").find_all("tr")
+rows_data = []
+for row in rows:
+    cells = [td.get_text(strip=True) for td in row.find_all("td")]
+    rows_data.append(cells)
+
+class game_specific:
+    def __init__(self,tw,list):
+        self.tw = tw
+        self.list = list
+class team:
+    def __init__(self, o2, o3, d, scp, ftp, trnv, flp):
+        self.o2=o2
+        self.o3=o3
+        self.d=d
+        self.scp=scp
+        self.trnv=trnv
+        self.ftp=ftp
+        self.flp=flp
+class counters:
+    def __init__(self,tc,fc,ftpc,trnvc,tvc,scpc):
+        self.tc=tc
+        self.fc=fc
+        self.ftpc=ftpc
+        self.trnvc=trnvc
+        self.tvc=tvc
+        self.scpc=scpc
+
+def gamemode():
+    pass
+
+def team_selection():
+    teamchoice1=str(input("Įveskite namų komandą: "))
+    teamchoice2=str(input("Įveskite kelio komandą: "))
+    for i in range(team_amount):
+        if teamchoice1 == rows_data[i][0][:3].lower():
+            teamchoice1 = rows_data[i][0]
+            t1_ix = i
+        if teamchoice2 == rows_data[i][0][:3].lower():
+            teamchoice2 = rows_data[i][0]
+            t2_ix = i
+    t1 = team(int(float(rows_data[t1_ix][10])*1000),int(float(rows_data[t1_ix][7])*1000),100,int((float(rows_data[t1_ix][14]))/(float(rows_data[t1_ix][14])+float(rows_data[t2_ix][15]))*1000),int(float(rows_data[t1_ix][13])*1000),int(float(rows_data[t1_ix][20])*10),200)
+    t2 = team(int(float(rows_data[t2_ix][10])*1000),int(float(rows_data[t2_ix][7])*1000),100,int((float(rows_data[t2_ix][14]))/(float(rows_data[t2_ix][14])+float(rows_data[t1_ix][15]))*1000),int(float(rows_data[t2_ix][13])*1000),int(float(rows_data[t2_ix][20])*10),200)
+    return teamchoice1, teamchoice2, t1, t2
+
 otc=0
 qrc=0
 qrt=4
 poss=20
+team_amount=20
 sleeptime = 0
 game_in_action = True
+teamchoice1, teamchoice2, t1, t2 = team_selection()
+c1 = counters(0, 0, 0, 0, 0, 0) #after round13
+c2 = counters(0, 0, 0, 0, 0, 0) #after round13
+g1 = game_specific(0,[])
+g2 = game_specific(0,[])
 
 def getting_a_foul(team,point_amount):
     if team == 1:
@@ -88,79 +155,6 @@ def possesion():
     c2.tvc = 0
     time.sleep(sleeptime)
 
-class game_specific:
-    def __init__(self,tw,list):
-        self.tw = tw
-        self.list = list
-class team:
-    def __init__(self, o2, o3, d, scp, ftp, trnv, flp):
-        self.o2=o2
-        self.o3=o3
-        self.d=d
-        self.scp=scp
-        self.trnv=trnv
-        self.ftp=ftp
-        self.flp=flp
-class counters:
-    def __init__(self,tc,fc,ftpc,trnvc,tvc,scpc):
-        self.tc=tc
-        self.fc=fc
-        self.ftpc=ftpc
-        self.trnvc=trnvc
-        self.tvc=tvc
-        self.scpc=scpc
-
-first_to = int(input("Reikalingas pergalių kiekis "))
-teamchoice1=str(input("Įveskite namų komandą: "))
-c1 = counters(0, 0, 0, 0, 0, 0) #after round13
-g1 = game_specific(0,[])
-if teamchoice1 == "AND":t1 = team(554,355,103,314,781,131,293)
-elif teamchoice1 == "ASM":t1 = team(573,328,52, 292,781,99,360)
-elif teamchoice1 == "CZM":t1 = team(552,374,50,372,731,142,374)
-elif teamchoice1 == "DUB":t1 = team(552,325,100,316,819,120,393)
-elif teamchoice1 == "EAM":t1 = team(534,382,85,318,818,113,287)
-elif teamchoice1 == "BAR":t1 = team(530,392,90,355,763,123,282)
-elif teamchoice1 == "BAY":t1 = team(541,316,80,304,789,128,262)
-elif teamchoice1 == "FEN":t1 = team(509,361,43,316,791,132,303)
-elif teamchoice1 == "HTA":t1 = team(591,406,74,292,854,120,284)
-elif teamchoice1 == "BAS":t1 = team(615,332,100,289,762,134,297)
-elif teamchoice1 == "LDC":t1 = team(491,308,99,335,789,135,328)
-elif teamchoice1 == "MTA":t1 = team(524,348,125,339,784,118,349)
-elif teamchoice1 == "OLY":t1 = team(569,340,62,359,788,131,400)
-elif teamchoice1 == "PAN":t1 = team(574,340,80,344,768,105,333)
-elif teamchoice1 == "PAR":t1 = team(501,350,74,393,768,149,326)
-elif teamchoice1 == "PAT":t1 = team(537,348,105,301,799,114,270)
-elif teamchoice1 == "RMA":t1 = team(558,333,69,336,795,132,362)
-elif teamchoice1 == "VBA":t1 = team(545,371,62,351,725,135,289)
-elif teamchoice1 == "VRB":t1 = team(581,366,77,312,771,150,277)
-elif teamchoice1 == "ZAL":t1 = team(539,410,59,326,747,119,318)
-
-teamchoice2=str(input("Įveskite kelio komandą: "))
-c2 = counters(0, 0, 0, 0, 0, 0) #after round 13
-g2 = game_specific(0,[])
-if teamchoice2 == "AND":t2 = team(554,355,103,314,781,131,293)
-elif teamchoice2 == "ASM":t2 = team(573,328,52, 292,781,99,360)
-elif teamchoice2 == "CZM":t2 = team(552,374,50,372,731,142,374)
-elif teamchoice2 == "DUB":t2 = team(552,325,100,316,819,120,393)
-elif teamchoice2 == "EAM":t2 = team(534,382,85,318,818,113,287)
-elif teamchoice2 == "BAR":t2 = team(530,392,90,355,763,123,282)
-elif teamchoice2 == "BAY":t2 = team(541,316,80,304,789,128,262)
-elif teamchoice2 == "FEN":t2 = team(509,361,43,316,791,132,303)
-elif teamchoice2 == "HTA":t2 = team(591,406,74,292,854,120,284)
-elif teamchoice2 == "BAS":t2 = team(615,332,100,289,762,134,297)
-elif teamchoice2 == "LDC":t2 = team(491,308,99,335,789,135,328)
-elif teamchoice2 == "MTA":t2 = team(524,348,125,339,784,118,349)
-elif teamchoice2 == "OLY":t2 = team(569,340,62,359,788,131,400)
-elif teamchoice2 == "PAN":t2 = team(574,340,80,344,768,105,333)
-elif teamchoice2 == "PAR":t2 = team(501,350,74,393,768,149,326)
-elif teamchoice2 == "PAT":t2 = team(537,348,105,301,799,114,270)
-elif teamchoice2 == "RMA":t2 = team(558,333,69,336,795,132,362)
-elif teamchoice2 == "VBA":t2 = team(545,371,62,351,725,135,289)
-elif teamchoice2 == "VRB":t2 = team(581,366,77,312,771,150,277)
-elif teamchoice2 == "ZAL":t2 = team(539,410,59,326,747,119,318)
-
-print('\n' + teamchoice1,teamchoice2)
-
 def game(otc,qrt,qrc,poss,sleeptime,game_in_action):
     for i in range(qrt):
         for j in range(poss):
@@ -199,7 +193,7 @@ def game(otc,qrt,qrc,poss,sleeptime,game_in_action):
 def series(first_to):
     for i in range(first_to*2-1):
         game(otc,qrt,qrc,poss,sleeptime,game_in_action)
-        print(f"{teamchoice1} {teamchoice2}")
+        print(f"{teamchoice1} - {teamchoice2}")
         print(f"{g1.tw} - {g2.tw}" + '\n')
         time.sleep(sleeptime * 10)
         if g1.tw == first_to:
@@ -210,4 +204,9 @@ def series(first_to):
             break
 
 if __name__ == "__main__":
+    first_to = int(input("Reikalingas pergalių kiekis "))
     series(first_to)
+
+if __name__ == "__main__":
+    series(first_to)
+
